@@ -10,9 +10,17 @@ let misurazione = {
 };
 
 function vaiAStep(stepTarget) {
-    if (stepTarget === 4) calcolaIndicatori();
-    if (stepTarget === 5) aggiornaRiepilogo();
+    // Forza il calcolo dei totali e degli indicatori quando vai allo step 4
+    if (stepTarget === 4) {
+        calcolaTotaleBulbi();
+        calcolaIndicatori();
+    }
+    // Aggiorna il riepilogo quando vai allo step 5
+    if (stepTarget === 5) {
+        aggiornaRiepilogo();
+    }
 
+    // Nasconde tutte le schermate e mostra quella attiva
     document.querySelectorAll('.schermata').forEach(el => {
         el.classList.remove('attiva');
     });
