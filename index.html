@@ -34,19 +34,16 @@
             </div>
         </div>
 
-        <!-- SCHERMATA 3: CONTEGGIO -->
+       <!-- SCHERMATA 3: CONTEGGIO -->
         <div id="step-3" class="schermata">
-            <h2>Passaggio 3: Conteggio</h2>
-            <div class="counter-grid">
-                <div class="counter-card btn-buoni" onclick="aggiungi('buoni')">
-                    <h3>BUONI</h3>
-                    <p id="cont-buoni">0</p>
-                </div>
-                <div class="counter-card btn-scarto" onclick="aggiungi('scarto')">
-                    <h3>SCARTO</h3>
-                    <p id="cont-scarto">0</p>
-                </div>
-            </div>
+            <h2>Passaggio 3: Inserimento Bulbi</h2>
+            
+            <p>Bulbi Buoni:</p>
+            <input type="number" id="input-buoni" placeholder="es. 120" oninput="calcolaTotaleBulbi()">
+            
+            <p>Bulbi Scarto:</p>
+            <input type="number" id="input-scarto" placeholder="es. 5" oninput="calcolaTotaleBulbi()">
+            
             <div class="risultato-live">
                 Bulbi Totali: <strong id="cont-totali">0</strong>
             </div>
