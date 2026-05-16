@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Analisi Campione Cipolle</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Analisi Campione</h1>
+    </header>
+
+    <main>
+        <!-- SCHERMATA 1: TARA -->
+        <div id="step-1" class="schermata attiva">
+            <h2>Passaggio 1: Tara</h2>
+            <p>Inserisci il peso della tara (Kg)</p>
+            <input type="number" id="input-tara" placeholder="es. 1.5" step="0.01">
+            <button class="btn-avanti" onclick="vaiAStep(2)">Avanti</button>
+        </div>
+
+        <!-- SCHERMATA 2: PESO NETTO -->
+        <div id="step-2" class="schermata">
+            <h2>Passaggio 2: Peso Netto</h2>
+            <p>Inserisci il peso lordo (Kg)</p>
+            <input type="number" id="input-lordo" placeholder="es. 20.5" step="0.01" oninput="calcolaNetto()">
+            <div class="risultato-live">
+                Peso Netto: <strong id="display-netto">0.00</strong> Kg
+            </div>
+            <div class="nav-buttons">
+                <button class="btn-indietro" onclick="vaiAStep(1)">Indietro</button>
+                <button class="btn-avanti" onclick="vaiAStep(3)">Avanti</button>
+            </div>
+        </div>
+
+        <!-- SCHERMATA 3: CONTEGGIO -->
+        <div id="step-3" class="schermata">
+            <h2>Passaggio 3: Conteggio</h2>
+            <div class="counter-grid">
+                <div class="counter-card btn-buoni" onclick="aggiungi('buoni')">
+                    <h3>BUONI</h3>
+                    <p id="cont-buoni">0</p>
+                </div>
+                <div class="counter-card btn-scarto" onclick="aggiungi('scarto')">
+                    <h3>SCARTO</h3>
+                    <p id="cont-scarto">0</p>
+                </div>
+            </div>
+            <div class="risultato-live">
+                Bulbi Totali: <strong id="cont-totali">0</strong>
+            </div>
+            <div class="nav-buttons">
+                <button class="btn-indietro" onclick="vaiAStep(2)">Indietro</button>
+                <button class="btn-avanti" onclick="vaiAStep(4)">Avanti</button>
+            </div>
+        </div>
+
+        <!-- SCHERMATA 4: INDICATORI -->
+        <div id="step-4" class="schermata">
+            <h2>Passaggio 4: Analisi</h2>
+            <div class="dati-box">
+                <p>Bulbi per Kg: <strong id="ind-bulbikg">0</strong></p>
+                <p>PNC (Scarto): <strong id="ind-pnc">0</strong>%</p>
+            </div>
+            <div class="nav-buttons">
+                <button class="btn-indietro" onclick="vaiAStep(3)">Indietro</button>
+                <button class="btn-avanti" onclick="vaiAStep(5)">Vai al Riassunto</button>
+            </div>
+        </div>
+
+        <!-- SCHERMATA 5: RIASSUNTO -->
+        <div id="step-5" class="schermata">
+            <h2>Passaggio 5: Riepilogo</h2>
+            <ul class="riepilogo-lista">
+                <li>Peso Netto: <span id="riep-netto">0</span> Kg</li>
+                <li>Bulbi per Kg: <span id="riep-bulbikg">0</span></li>
+                <li>PNC (Scarto): <span id="riep-pnc">0</span>%</li>
+                <li>Bulbi Buoni: <span id="riep-buoni">0</span></li>
+                <li>Bulbi Scarto: <span id="riep-scarto">0</span></li>
+                <li>Bulbi Totali: <span id="riep-totali">0</span></li>
+            </ul>
+            <button class="btn-reset" onclick="resetTutto()">Nuova Misurazione</button>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
