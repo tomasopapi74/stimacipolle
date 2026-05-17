@@ -62,6 +62,8 @@ button {
 .btn-reset { background: #e74c3c; width: 100%; margin-top: auto; }
 .btn-share.wa { background: #25D366; }
 .btn-share.em { background: #34495e; }
+.btn-modifica { background: #f39c12; color: white; }
+.btn-elimina { background: #c0392b; color: white; }
 
 .card-storico {
     background: white; padding: 15px; border: 1px solid #ddd; border-radius: 8px;
