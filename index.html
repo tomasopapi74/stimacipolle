@@ -114,7 +114,7 @@
             <button class="btn-indietro no-print" onclick="vaiAStep(0)" style="margin-top: 20px;">Torna alla Home</button>
         </div>
 
-        <!-- SCHERMATA DETTAGLIO SALVATAGGIO -->
+     <!-- SCHERMATA DETTAGLIO SALVATAGGIO -->
         <div id="step-dettaglio" class="schermata">
             <h2>Dettaglio Campione</h2>
             <div id="contenuto-dettaglio"></div>
@@ -126,7 +126,13 @@
                 <img id="preview-foto" style="display:none; max-width:100%; margin-top:10px; border-radius:8px;">
             </div>
 
+            <!-- Nuovi pulsanti Modifica ed Elimina -->
             <div class="nav-buttons no-print" style="margin-top: 20px;">
+                <button class="btn-modifica" onclick="caricaInModifica()">Modifica</button>
+                <button class="btn-elimina" onclick="eliminaSalvataggio()">Elimina</button>
+            </div>
+
+            <div class="nav-buttons no-print" style="margin-top: 10px;">
                 <button class="btn-indietro" onclick="mostraStorico()">Indietro</button>
                 <button class="btn-avanti" onclick="window.print()">Stampa</button>
             </div>
