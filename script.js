@@ -4,7 +4,7 @@ let idDettaglioAttivo = null;
 
 function inizializzaMisurazione() {
     return {
-        id: Date.now(), // Identificativo unico per il salvataggio
+        id: Date.now(),
         data: new Date().toISOString().split('T')[0],
         socio: '',
         codice: '',
@@ -16,7 +16,6 @@ function inizializzaMisurazione() {
     };
 }
 
-// Imposta la data di oggi all'avvio
 document.getElementById('input-data').value = misurazione.data;
 
 function vaiAStep(stepTarget) {
@@ -26,7 +25,6 @@ function vaiAStep(stepTarget) {
     }
     if (stepTarget === 5) aggiornaRiepilogo();
 
-    // Raccoglie i dati del Passaggio 0
     if (stepTarget > 0) {
         misurazione.data = document.getElementById('input-data').value;
         misurazione.socio = document.getElementById('input-socio').value;
@@ -72,7 +70,15 @@ function aggiornaRiepilogo() {
 }
 
 function salvaDati() {
-    storicoSalvataggi.push(misurazione);
+    const index = storicoSalvataggi.findIndex(s => s.id === misurazione.id);
+    const copiaDati = JSON.parse(JSON.stringify(misurazione)); // Salva una copia esatta
+    
+    if (index !== -1) {
+        storicoSalvataggi[index] = copiaDati; // Sovrascrive se esiste già
+    } else {
+        storicoSalvataggi.push(copiaDati); // Aggiunge se è nuovo
+    }
+    
     localStorage.setItem('stimacipolle_storico', JSON.stringify(storicoSalvataggi));
     alert("Misurazione salvata con successo nello Storico!");
 }
@@ -103,7 +109,6 @@ function mostraStorico() {
         return;
     }
 
-    // Mostra dal più recente al più vecchio
     [...storicoSalvataggi].reverse().forEach(item => {
         let div = document.createElement('div');
         div.className = 'card-storico';
@@ -143,6 +148,36 @@ function apriDettaglio(id) {
     } else {
         imgPreview.style.display = 'none';
         imgPreview.src = '';
+    }
+}
+
+// NUOVO: Elimina file dall'archivio
+function eliminaSalvataggio() {
+    if(confirm("Sei sicuro di voler eliminare definitivamente questo salvataggio?")) {
+        storicoSalvataggi = storicoSalvataggi.filter(s => s.id !== idDettaglioAttivo);
+        localStorage.setItem('stimacipolle_storico', JSON.stringify(storicoSalvataggi));
+        mostraStorico();
+    }
+}
+
+// NUOVO: Ricarica i dati per modificarli
+function caricaInModifica() {
+    if(confirm("Vuoi modificare questo campione? I dati attualmente non salvati andranno persi.")) {
+        const item = storicoSalvataggi.find(s => s.id === idDettaglioAttivo);
+        misurazione = JSON.parse(JSON.stringify(item)); // Clona i dati
+        
+        // Riempie nuovamente i campi di testo visivi
+        document.getElementById('input-data').value = misurazione.data;
+        document.getElementById('input-socio').value = misurazione.socio || '';
+        document.getElementById('input-codice').value = misurazione.codice || '';
+        document.getElementById('input-tara').value = misurazione.tara || '';
+        document.getElementById('input-lordo').value = misurazione.pesoLordo || '';
+        document.getElementById('display-netto').innerText = misurazione.pesoNetto.toFixed(2);
+        document.getElementById('input-buoni').value = misurazione.bulbiBuoni || '';
+        document.getElementById('input-scarto').value = misurazione.bulbiScarto || '';
+        document.getElementById('cont-totali').innerText = misurazione.bulbiTotali;
+        
+        vaiAStep(0);
     }
 }
 
