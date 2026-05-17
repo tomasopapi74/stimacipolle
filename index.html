@@ -3,21 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Analisi Campione Cipolle</title>
+    <title>Stima Cipolle</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
+    <header class="no-print">
         <h1>Analisi Campione</h1>
+        <button id="btn-header-storico" onclick="mostraStorico()">Storico</button>
     </header>
 
     <main>
+        <!-- SCHERMATA 0: DATI INIZIALI -->
+        <div id="step-0" class="schermata attiva">
+            <h2>Passaggio 0: Dati Campione</h2>
+            <p>Data:</p>
+            <input type="date" id="input-data">
+            <p>Nome Socio:</p>
+            <input type="text" id="input-socio" placeholder="es. Mario Rossi">
+            <p>Codice Campione:</p>
+            <input type="text" id="input-codice" placeholder="es. C-123">
+            <button class="btn-avanti" onclick="vaiAStep(1)">Avanti</button>
+        </div>
+
         <!-- SCHERMATA 1: TARA -->
-        <div id="step-1" class="schermata attiva">
+        <div id="step-1" class="schermata">
             <h2>Passaggio 1: Tara</h2>
             <p>Inserisci il peso della tara (Kg)</p>
             <input type="number" id="input-tara" placeholder="es. 1.5" step="0.01">
-            <button class="btn-avanti" onclick="vaiAStep(2)">Avanti</button>
+            <div class="nav-buttons">
+                <button class="btn-indietro" onclick="vaiAStep(0)">Indietro</button>
+                <button class="btn-avanti" onclick="vaiAStep(2)">Avanti</button>
+            </div>
         </div>
 
         <!-- SCHERMATA 2: PESO NETTO -->
@@ -28,26 +44,23 @@
             <div class="risultato-live">
                 Peso Netto: <strong id="display-netto">0.00</strong> Kg
             </div>
-            <div class="nav-buttons">
+            <div class="nav-buttons btn-grandi">
                 <button class="btn-indietro" onclick="vaiAStep(1)">Indietro</button>
                 <button class="btn-avanti" onclick="vaiAStep(3)">Avanti</button>
             </div>
         </div>
 
-       <!-- SCHERMATA 3: CONTEGGIO -->
+        <!-- SCHERMATA 3: CONTEGGIO MANUALE -->
         <div id="step-3" class="schermata">
             <h2>Passaggio 3: Inserimento Bulbi</h2>
-            
             <p>Bulbi Buoni:</p>
             <input type="number" id="input-buoni" placeholder="es. 120" oninput="calcolaTotaleBulbi()">
-            
             <p>Bulbi Scarto:</p>
             <input type="number" id="input-scarto" placeholder="es. 5" oninput="calcolaTotaleBulbi()">
-            
             <div class="risultato-live">
                 Bulbi Totali: <strong id="cont-totali">0</strong>
             </div>
-            <div class="nav-buttons">
+            <div class="nav-buttons btn-grandi">
                 <button class="btn-indietro" onclick="vaiAStep(2)">Indietro</button>
                 <button class="btn-avanti" onclick="vaiAStep(4)">Avanti</button>
             </div>
@@ -60,16 +73,19 @@
                 <p>Bulbi per Kg: <strong id="ind-bulbikg">0</strong></p>
                 <p>PNC (Scarto): <strong id="ind-pnc">0</strong>%</p>
             </div>
-            <div class="nav-buttons">
+            <div class="nav-buttons btn-grandi">
                 <button class="btn-indietro" onclick="vaiAStep(3)">Indietro</button>
                 <button class="btn-avanti" onclick="vaiAStep(5)">Vai al Riassunto</button>
             </div>
         </div>
 
-      <!-- SCHERMATA 5: RIASSUNTO -->
+        <!-- SCHERMATA 5: RIASSUNTO -->
         <div id="step-5" class="schermata">
             <h2>Passaggio 5: Riepilogo</h2>
             <ul class="riepilogo-lista">
+                <li>Data: <span id="riep-data">-</span></li>
+                <li>Socio: <span id="riep-socio">-</span></li>
+                <li>Campione: <span id="riep-codice">-</span></li>
                 <li>Peso Netto: <span id="riep-netto">0</span> Kg</li>
                 <li>Bulbi per Kg: <span id="riep-bulbikg">0</span></li>
                 <li>PNC (Scarto): <span id="riep-pnc">0</span>%</li>
@@ -77,13 +93,46 @@
                 <li>Bulbi Scarto: <span id="riep-scarto">0</span></li>
                 <li>Bulbi Totali: <span id="riep-totali">0</span></li>
             </ul>
-            <div class="nav-buttons" style="margin-bottom: 15px;">
+            
+            <div class="nav-buttons no-print" style="margin-bottom: 15px;">
                 <button class="btn-indietro" onclick="vaiAStep(4)">Indietro</button>
+                <button class="btn-salva" onclick="salvaDati()">Salva</button>
             </div>
-            <button class="btn-reset" onclick="resetTutto()">Nuova Misurazione</button>
-        </div>
-    </main>
 
+            <div class="nav-buttons no-print" style="margin-bottom: 15px;">
+                <button class="btn-share wa" onclick="condividi('whatsapp')">WhatsApp</button>
+                <button class="btn-share em" onclick="condividi('email')">Email</button>
+            </div>
+
+            <button class="btn-reset no-print" onclick="resetTutto()">Nuova Misurazione</button>
+        </div>
+
+        <!-- SCHERMATA STORICO -->
+        <div id="step-storico" class="schermata">
+            <h2 class="no-print">Archivio Salvataggi</h2>
+            <div id="lista-storico"></div>
+            <button class="btn-indietro no-print" onclick="vaiAStep(0)" style="margin-top: 20px;">Torna alla Home</button>
+        </div>
+
+        <!-- SCHERMATA DETTAGLIO SALVATAGGIO -->
+        <div id="step-dettaglio" class="schermata">
+            <h2>Dettaglio Campione</h2>
+            <div id="contenuto-dettaglio"></div>
+            
+            <div class="extra-dati no-print">
+                <h3>Aggiungi Note e Foto</h3>
+                <textarea id="input-commento" placeholder="Inserisci un commento..." onchange="salvaExtra()"></textarea>
+                <input type="file" accept="image/*" id="input-foto" onchange="caricaFoto(event)">
+                <img id="preview-foto" style="display:none; max-width:100%; margin-top:10px; border-radius:8px;">
+            </div>
+
+            <div class="nav-buttons no-print" style="margin-top: 20px;">
+                <button class="btn-indietro" onclick="mostraStorico()">Indietro</button>
+                <button class="btn-avanti" onclick="window.print()">Stampa</button>
+            </div>
+        </div>
+
+    </main>
     <script src="script.js"></script>
 </body>
 </html>
