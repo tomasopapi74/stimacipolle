@@ -18,41 +18,56 @@
             <h2>Passaggio 0: Dati Campione</h2>
             <p>Data:</p>
             <input type="date" id="input-data">
-            <p>Nome Socio:</p>
-            <input type="text" id="input-socio" placeholder="es. Mario Rossi">
+            <p>Nome Coltivatore:</p>
+            <input type="text" id="input-coltivatore" placeholder="es. Mario Rossi">
             <p>Codice Campione:</p>
             <input type="text" id="input-codice" placeholder="es. C-123">
             <button class="btn-avanti" onclick="vaiAStep(1)">Avanti</button>
         </div>
 
-        <!-- SCHERMATA 1: TARA -->
+        <!-- SCHERMATA 1: CALIBRO (NUOVA) -->
         <div id="step-1" class="schermata">
-            <h2>Passaggio 1: Tara</h2>
-            <p>Inserisci il peso della tara (Kg)</p>
-            <input type="number" id="input-tara" placeholder="es. 1.5" step="0.01">
-            <div class="nav-buttons">
+            <h2>Passaggio 1: Calibro</h2>
+            <p>Seleziona il calibro dei bulbi:</p>
+            <div class="calibro-grid">
+                <button id="btn-calibro-3" class="btn-calibro" onclick="selezionaCalibro('3')">3</button>
+                <button id="btn-calibro-35" class="btn-calibro" onclick="selezionaCalibro('3.5')">3,5</button>
+                <button id="btn-calibro-4" class="btn-calibro" onclick="selezionaCalibro('4')">4</button>
+            </div>
+            <div class="nav-buttons" style="margin-top: auto;">
                 <button class="btn-indietro" onclick="vaiAStep(0)">Indietro</button>
                 <button class="btn-avanti" onclick="vaiAStep(2)">Avanti</button>
             </div>
         </div>
 
-        <!-- SCHERMATA 2: PESO NETTO -->
+        <!-- SCHERMATA 2: TARA -->
         <div id="step-2" class="schermata">
-            <h2>Passaggio 2: Peso Netto</h2>
+            <h2>Passaggio 2: Tara</h2>
+            <p>Inserisci il peso della tara (Kg)</p>
+            <input type="number" id="input-tara" placeholder="es. 1.5" step="0.01">
+            <div class="nav-buttons">
+                <button class="btn-indietro" onclick="vaiAStep(1)">Indietro</button>
+                <button class="btn-avanti" onclick="vaiAStep(3)">Avanti</button>
+            </div>
+        </div>
+
+        <!-- SCHERMATA 3: PESO NETTO -->
+        <div id="step-3" class="schermata">
+            <h2>Passaggio 3: Peso Netto</h2>
             <p>Inserisci il peso lordo (Kg)</p>
             <input type="number" id="input-lordo" placeholder="es. 20.5" step="0.01" oninput="calcolaNetto()">
             <div class="risultato-live">
                 Peso Netto: <strong id="display-netto">0.00</strong> Kg
             </div>
             <div class="nav-buttons btn-grandi">
-                <button class="btn-indietro" onclick="vaiAStep(1)">Indietro</button>
-                <button class="btn-avanti" onclick="vaiAStep(3)">Avanti</button>
+                <button class="btn-indietro" onclick="vaiAStep(2)">Indietro</button>
+                <button class="btn-avanti" onclick="vaiAStep(4)">Avanti</button>
             </div>
         </div>
 
-        <!-- SCHERMATA 3: CONTEGGIO MANUALE -->
-        <div id="step-3" class="schermata">
-            <h2>Passaggio 3: Inserimento Bulbi</h2>
+        <!-- SCHERMATA 4: CONTEGGIO MANUALE -->
+        <div id="step-4" class="schermata">
+            <h2>Passaggio 4: Inserimento Bulbi</h2>
             <p>Bulbi Buoni:</p>
             <input type="number" id="input-buoni" placeholder="es. 120" oninput="calcolaTotaleBulbi()">
             <p>Bulbi Scarto:</p>
@@ -61,31 +76,32 @@
                 Bulbi Totali: <strong id="cont-totali">0</strong>
             </div>
             <div class="nav-buttons btn-grandi">
-                <button class="btn-indietro" onclick="vaiAStep(2)">Indietro</button>
-                <button class="btn-avanti" onclick="vaiAStep(4)">Avanti</button>
+                <button class="btn-indietro" onclick="vaiAStep(3)">Indietro</button>
+                <button class="btn-avanti" onclick="vaiAStep(5)">Avanti</button>
             </div>
         </div>
 
-        <!-- SCHERMATA 4: INDICATORI -->
-        <div id="step-4" class="schermata">
-            <h2>Passaggio 4: Analisi</h2>
+        <!-- SCHERMATA 5: INDICATORI -->
+        <div id="step-5" class="schermata">
+            <h2>Passaggio 5: Analisi</h2>
             <div class="dati-box">
                 <p>Bulbi per Kg: <strong id="ind-bulbikg">0</strong></p>
                 <p>PNC (Scarto): <strong id="ind-pnc">0</strong>%</p>
             </div>
             <div class="nav-buttons btn-grandi">
-                <button class="btn-indietro" onclick="vaiAStep(3)">Indietro</button>
-                <button class="btn-avanti" onclick="vaiAStep(5)">Vai al Riassunto</button>
+                <button class="btn-indietro" onclick="vaiAStep(4)">Indietro</button>
+                <button class="btn-avanti" onclick="vaiAStep(6)">Vai al Riassunto</button>
             </div>
         </div>
 
-        <!-- SCHERMATA 5: RIASSUNTO -->
-        <div id="step-5" class="schermata">
-            <h2>Passaggio 5: Riepilogo</h2>
+        <!-- SCHERMATA 6: RIASSUNTO -->
+        <div id="step-6" class="schermata">
+            <h2>Passaggio 6: Riepilogo</h2>
             <ul class="riepilogo-lista">
                 <li>Data: <span id="riep-data">-</span></li>
-                <li>Socio: <span id="riep-socio">-</span></li>
+                <li>Coltivatore: <span id="riep-coltivatore">-</span></li>
                 <li>Campione: <span id="riep-codice">-</span></li>
+                <li>Calibro: <span id="riep-calibro">-</span></li>
                 <li>Peso Netto: <span id="riep-netto">0</span> Kg</li>
                 <li>Bulbi per Kg: <span id="riep-bulbikg">0</span></li>
                 <li>PNC (Scarto): <span id="riep-pnc">0</span>%</li>
@@ -95,7 +111,7 @@
             </ul>
             
             <div class="nav-buttons no-print" style="margin-bottom: 15px;">
-                <button class="btn-indietro" onclick="vaiAStep(4)">Indietro</button>
+                <button class="btn-indietro" onclick="vaiAStep(5)">Indietro</button>
                 <button class="btn-salva" onclick="salvaDati()">Salva</button>
             </div>
 
@@ -114,7 +130,7 @@
             <button class="btn-indietro no-print" onclick="vaiAStep(0)" style="margin-top: 20px;">Torna alla Home</button>
         </div>
 
-     <!-- SCHERMATA DETTAGLIO SALVATAGGIO -->
+        <!-- SCHERMATA DETTAGLIO SALVATAGGIO -->
         <div id="step-dettaglio" class="schermata">
             <h2>Dettaglio Campione</h2>
             <div id="contenuto-dettaglio"></div>
@@ -126,7 +142,6 @@
                 <img id="preview-foto" style="display:none; max-width:100%; margin-top:10px; border-radius:8px;">
             </div>
 
-            <!-- Nuovi pulsanti Modifica ed Elimina -->
             <div class="nav-buttons no-print" style="margin-top: 20px;">
                 <button class="btn-modifica" onclick="caricaInModifica()">Modifica</button>
                 <button class="btn-elimina" onclick="eliminaSalvataggio()">Elimina</button>
@@ -137,7 +152,6 @@
                 <button class="btn-avanti" onclick="window.print()">Stampa</button>
             </div>
         </div>
-
     </main>
     <script src="script.js"></script>
 </body>
