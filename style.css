@@ -17,7 +17,7 @@ header {
 }
 
 header h1 { margin: 0; font-size: 1.5rem; }
-#btn-header-storico { padding: 8px 15px; background: #f39c12; font-size: 1rem; }
+#btn-header-storico { padding: 8px 15px; background: #f39c12; font-size: 1rem; border: none; border-radius: 5px; color: white; font-weight: bold; }
 
 main { flex: 1; padding: 20px; display: flex; flex-direction: column; }
 
@@ -38,6 +38,17 @@ input[type="number"], input[type="date"], input[type="text"], textarea {
 
 textarea { resize: vertical; min-height: 100px; font-size: 1.2rem; }
 
+/* Griglia per il calibro */
+.calibro-grid { display: flex; gap: 10px; margin-bottom: 30px; }
+.btn-calibro { 
+    flex: 1; padding: 25px 0; font-size: 1.8rem; font-weight: bold; 
+    background: #ecf0f1; color: #7f8c8d; border: 3px solid #bdc3c7; 
+    border-radius: 12px; cursor: pointer; transition: 0.2s;
+}
+.btn-calibro.selezionato { 
+    background: #3498db; color: white; border-color: #2980b9; 
+}
+
 .risultato-live, .dati-box {
     background: white; padding: 20px; border-radius: 8px; font-size: 1.5rem;
     text-align: center; margin-bottom: 20px; border: 1px solid #ddd;
@@ -53,24 +64,22 @@ button {
     cursor: pointer; font-weight: bold; flex: 1; color: white;
 }
 
-/* Pulsanti ingranditi per i passaggi chiave */
 .btn-grandi button { padding: 25px; font-size: 1.6rem; }
 
 .btn-avanti { background: #3498db; }
 .btn-indietro { background: #95a5a6; }
 .btn-salva { background: #27ae60; }
+.btn-modifica { background: #f39c12; }
+.btn-elimina { background: #c0392b; }
 .btn-reset { background: #e74c3c; width: 100%; margin-top: auto; }
 .btn-share.wa { background: #25D366; }
 .btn-share.em { background: #34495e; }
-.btn-modifica { background: #f39c12; color: white; }
-.btn-elimina { background: #c0392b; color: white; }
 
 .card-storico {
     background: white; padding: 15px; border: 1px solid #ddd; border-radius: 8px;
     margin-bottom: 10px; cursor: pointer; display: flex; justify-content: space-between;
 }
 
-/* Regole per la stampa */
 @media print {
     body { background: white; }
     .no-print { display: none !important; }
